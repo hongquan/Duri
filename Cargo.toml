@@ -1,0 +1,23 @@
+[package]
+name = "duri"
+version = "0.1.0"
+authors = ["Nguyễn Hồng Quân <ng.hong.quan@gmail.com>"]
+edition = "2018"
+license = "GPL-3.0"
+description = "CLI tool to get data URI of a file"
+readme = "README.md"
+
+[package.metadata.deb]
+extended-description = """CLI tool to read a file and return its content as data URI.
+It is useful when you want to upload file to a HTTP API, which requires data to be posted as JSON string.
+You then can use this tool to get the file's base64-encoded content, passed to "jo" to build JSON string.
+"""
+
+[dependencies]
+tree_magic_mini = "3.0.0"
+clap = { version = "3.0.0-beta.2", features = [ "suggestions", "color" ] }
+log = "0.4.14"
+flexi_logger = { version = "0.18.0", features = ["colors"] }
+color-eyre = "0.5.11"
+base64 = "0.13.0"
+urlencoding = "1.3.3"
