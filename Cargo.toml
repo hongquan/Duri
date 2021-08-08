@@ -6,12 +6,18 @@ edition = "2018"
 license = "GPL-3.0-or-later"
 description = "CLI tool to get data URI of a file"
 readme = "README.md"
+homepage = "https://github.com/hongquan/Duri"
 repository = "https://github.com/hongquan/Duri.git"
+keywords = ["data-uri", "base64", "cli", "http-api"]
+categories = ["command-line-utilities", "development-tools", "multimedia::encoding"]
+exclude = [
+    ".github",
+    "debian",
+    ".travis.yml",
+]
 
 [package.metadata.deb]
-extended-description = """CLI tool to read a file and return its content as data URI.
-
-It is useful when you want to upload file to a HTTP API, which requires data to be posted as JSON string.
+extended-description = """It is useful when you want to upload file to a HTTP API, which requires data to be posted as JSON string.
 You then can use this tool to get the file's base64-encoded content, passed to "jo" to build JSON string.
 """
 section = "rust"
