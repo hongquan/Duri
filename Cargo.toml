@@ -3,15 +3,21 @@ name = "duri"
 version = "0.1.0"
 authors = ["Nguyễn Hồng Quân <ng.hong.quan@gmail.com>"]
 edition = "2018"
-license = "GPL-3.0"
+license = "GPL-3.0-or-later"
 description = "CLI tool to get data URI of a file"
 readme = "README.md"
+repository = "https://github.com/hongquan/Duri.git"
 
 [package.metadata.deb]
 extended-description = """CLI tool to read a file and return its content as data URI.
+
 It is useful when you want to upload file to a HTTP API, which requires data to be posted as JSON string.
 You then can use this tool to get the file's base64-encoded content, passed to "jo" to build JSON string.
 """
+section = "rust"
+copyright = "2021, Nguyễn Hồng Quân <ng.hong.quan@gmail.com>"
+license-file = ["debian/license", "3"]
+changelog = "debian/changelog"
 
 [dependencies]
 tree_magic_mini = "3.0.0"
