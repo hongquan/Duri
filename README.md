@@ -1,10 +1,15 @@
 # Duri #
 
+![made-in-vietnam](https://madewithlove.vercel.app/vn?heart=true&colorA=%23ffcd00&colorB=%23da251d)
+[![registry](https://badgen.net/crates/v/duri)](https://crates.io/crates/duri)
+
 CLI tool to get data URI of a file.
+
+![Logo](data/durian.svg)
 
 ## Install
 
-Duri is written in Rust, so you can install it from crates.io:
+Duri is written in [Rust](https://www.rust-lang.org/), so you can install it from [crates.io](https://crates.io/crates/duri):
 
 ```console
 cargo install duri
@@ -72,4 +77,5 @@ jo -d. file.name=image.png file.content=%image.png | http example-api.vn/ekyc/
 Credit
 ------
 
-Brought to you by [Nguyễn Hồng Quân](https://quan.hoabinh.vn).
+- Brought to you by [Nguyễn Hồng Quân](https://quan.hoabinh.vn).
+- Application is from [Freepik](https://www.flaticon.com/free-icon/durian_765534).
