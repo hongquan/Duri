@@ -1,13 +1,13 @@
 use std::path::Path;
 use std::io::{stdin, Read};
-use std::fs::File;
 use std::str;
 
 use log;
 use base64;
 use tree_magic_mini;
 use urlencoding::encode as urlencode;
-use color_eyre::eyre::{Result};
+use color_eyre::eyre::Result;
+use eyre::eyre;
 use clap::{crate_version, crate_authors, crate_description, Clap};
 use flexi_logger::Logger;
 
@@ -34,9 +34,7 @@ fn read_input(infile: &str) -> Result<Vec<u8>> {
         },
         _ => {
             let path = Path::new(infile);
-            let mut buf = Vec::<u8>::new();
-            File::open(path)?.read_to_end(&mut buf)?;
-            Ok(buf)
+            std::fs::read(path).map_err(|e| eyre!(e))
         }
     }
 }
@@ -61,6 +59,7 @@ fn main() -> Result<()> {
         _ => "debug"
     };
     Logger::try_with_str(level)?.start()?;
+    color_eyre::install()?;
     log::debug!("Process file {}", opts.infile);
     let infile = opts.infile.trim();
     let content = read_input(infile)?;
