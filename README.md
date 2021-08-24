@@ -38,7 +38,7 @@ cargo install duri
 
 ## Use cases
 
-Assume that you need to upload file to a RESTful HTTP API. The HTTP API may require posted data to be JSON string and the file content to be in form of base64-encoding [data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs).
+Assume that you need to upload file to a RESTful HTTP API. The HTTP API may require posted data to be JSON string and the file content to be in form of base64-encoded [data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs).
 
 You can combine Duri with [jo](https://github.com/jpmens/jo) to build JSON, like:
 
@@ -67,7 +67,7 @@ The `duri` + `jo` combo will generate a JSON like
 The string is passed to HTTPie via standard input and HTTPie will build a POST request with that JSON data.
 
 Note that, if your HTTP API requires file to be in plain base64 string, not beginning with `data:xxx`, you don't need Duri.
-In that case, just use `jo` alone, with its `%` directive:
+In that case, just use `jo` alone, with its `%` modifier:
 
 ```console
 jo -d. file.name=image.png file.content=%image.png | http example-api.vn/ekyc/
@@ -78,4 +78,4 @@ Credit
 ------
 
 - Brought to you by [Nguyễn Hồng Quân](https://quan.hoabinh.vn).
-- Application is from [Freepik](https://www.flaticon.com/free-icon/durian_765534).
+- Icon is from [Freepik](https://www.flaticon.com/free-icon/durian_765534).
