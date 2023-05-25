@@ -1,26 +1,24 @@
 use std::io::{stdin, Read};
 use std::path::Path;
 
-use clap::{crate_authors, crate_description, crate_version, Clap};
+use clap::Parser;
 use color_eyre::eyre::Result;
 use eyre::eyre;
 use flexi_logger::Logger;
 use urlencoding::encode as urlencode;
+use clap_verbosity_flag::Verbosity;
+use base64::{Engine as _, engine::general_purpose};
 
-#[derive(Clap)]
-#[clap(version = crate_version!(), author = crate_authors!(), about = crate_description!())]
+#[derive(Parser)]
+#[command(author, version, about, long_about = None)]
 struct Opts {
-    #[clap(about = "Input file, pass \"-\" for standard input.")]
+    /// Input file, pass "-" for standard input.
     infile: String,
-    #[clap(short, long, about = "Prefer percent encoding for text file.")]
+    /// Prefer percent encoding for text file.
+    #[arg(short, long)]
     text: bool,
-    #[clap(
-        short,
-        long,
-        parse(from_occurrences),
-        about = "Verbosity level (repeat to increase)."
-    )]
-    verbose: i8,
+    #[command(flatten)]
+    verbose: Verbosity,
 }
 
 fn read_input(infile: &str) -> Result<Vec<u8>> {
@@ -39,23 +37,17 @@ fn read_input(infile: &str) -> Result<Vec<u8>> {
 }
 
 fn encode(content: Vec<u8>, mtype: &str, prefer_percent: bool) -> Result<String> {
-    let mut body = String::new();
     if prefer_percent && mtype.starts_with("text/") {
-        body = urlencode(std::str::from_utf8(&content)?)
+        Ok(urlencode(std::str::from_utf8(&content)?).to_string())
     } else {
-        base64::encode_config_buf(&content, base64::URL_SAFE, &mut body)
+        Ok(general_purpose::URL_SAFE.encode(&content))
     }
-    Ok(body)
 }
 
 fn main() -> Result<()> {
     let opts = Opts::parse();
-    let level = match opts.verbose {
-        0 => "warning",
-        1 => "info",
-        _ => "debug",
-    };
-    Logger::try_with_str(level)?.start()?;
+    let l = opts.verbose.log_level_filter();
+    Logger::try_with_str(l.as_str())?.start()?;
     color_eyre::install()?;
     log::debug!("Process file {}", opts.infile);
     let infile = opts.infile.trim();

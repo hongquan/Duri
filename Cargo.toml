@@ -1,8 +1,8 @@
 [package]
 name = "duri"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Nguyễn Hồng Quân <ng.hong.quan@gmail.com>"]
-edition = "2018"
+edition = "2021"
 license = "GPL-3.0-or-later"
 description = "CLI tool to get data URI of a file"
 readme = "README.md"
@@ -26,11 +26,12 @@ license-file = ["debian/license", "3"]
 changelog = "debian/changelog"
 
 [dependencies]
-tree_magic_mini = "3.0.0"
-clap = { version = "3.0.0-beta.2", features = [ "suggestions", "color" ] }
 log = "0.4.14"
-flexi_logger = { version = "0.18.0", features = ["colors"] }
-color-eyre = { version = "0.5.11", default-features = false }
-base64 = "0.13.0"
-urlencoding = "1.3.3"
 eyre = "0.6.5"
+flexi_logger = { version = "0.25.5", features = ["colors"] }
+color-eyre = "0.6.2"
+base64 = "0.21.2"
+urlencoding = "2.1.2"
+clap = { version = "4.3.0", features = ["suggestions", "color", "derive"] }
+clap-verbosity-flag = "2.0.1"
+tree_magic_mini = "3.0.3"
