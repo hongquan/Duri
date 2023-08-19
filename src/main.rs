@@ -1,9 +1,8 @@
 use std::io::{stdin, Read};
 use std::path::Path;
+use std::str::Utf8Error;
 
 use clap::Parser;
-use color_eyre::eyre::Result;
-use eyre::eyre;
 use flexi_logger::Logger;
 use urlencoding::encode as urlencode;
 use clap_verbosity_flag::Verbosity;
@@ -21,7 +20,7 @@ struct Opts {
     verbose: Verbosity,
 }
 
-fn read_input(infile: &str) -> Result<Vec<u8>> {
+fn read_input(infile: &str) -> std::io::Result<Vec<u8>> {
     match infile {
         "-" => {
             let mut buf = Vec::<u8>::new();
@@ -31,12 +30,12 @@ fn read_input(infile: &str) -> Result<Vec<u8>> {
         }
         _ => {
             let path = Path::new(infile);
-            std::fs::read(path).map_err(|e| eyre!(e))
+            std::fs::read(path)
         }
     }
 }
 
-fn encode(content: Vec<u8>, mtype: &str, prefer_percent: bool) -> Result<String> {
+fn encode(content: Vec<u8>, mtype: &str, prefer_percent: bool) -> Result<String, Utf8Error> {
     if prefer_percent && mtype.starts_with("text/") {
         Ok(urlencode(std::str::from_utf8(&content)?).to_string())
     } else {
@@ -44,7 +43,7 @@ fn encode(content: Vec<u8>, mtype: &str, prefer_percent: bool) -> Result<String>
     }
 }
 
-fn main() -> Result<()> {
+fn main() -> eyre::Result<()> {
     let opts = Opts::parse();
     let l = opts.verbose.log_level_filter();
     Logger::try_with_str(l.as_str())?.start()?;
